@@ -1,0 +1,29 @@
+<div class="container">
+    <% if user_signed_in? %>
+        <% if current_user.id == @cat_info.user_id %>
+            <%= link_to '수정',edit_cat_info_path(@cat_info), class: 'btn btn-warning' %> | 
+            <%= link_to '삭제',@cat_info, method: :delete, data: { confirm: '삭제하시겠습니까?' }, class: 'btn btn-warning' %>
+        <% end %>
+    <% end %>
+ 
+<br><br>
+<div class="container col-md-10" align="center" style="margin-top: 40px; padding: 30px; background-color: #fff; border-radius: 15px;">
+   <div class="form-control">
+<h3><%= @cat_info.title %></h3>
+<%#if current_user.email == @cat_info.Email %>
+
+<br>
+
+   작성자:<%= User.find(@cat_info.user_id).email %> |<%= time_ago_in_words(@cat_info.created_at) %> ago| 조회수 : <%#= "#{@cat_info.impression_count}" %>
+
+   </div>
+      <hr>
+    <div class="form-control">
+     <%= image_tag("#{@cat_info.picture}",  width: "50%", height: "50%") %><br><%= @cat_info.content %>
+     </div>
+    <br><br>
+    </div>
+<%= link_to '목록', cat_infos_path %>
+
+ </div>
+

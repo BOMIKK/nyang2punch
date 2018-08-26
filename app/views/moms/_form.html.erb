@@ -1,0 +1,40 @@
+<div class="container">
+<%= simple_form_for(@mom, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+  
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+  <div class="form-group">
+   <%= f.input :Email, :input_html => { :value => current_user.email }, label: "작성자" , disabled: true %>
+    </div>
+    
+    <div class="form-group">
+        <%= f.select :region, 
+                options_for_select(['서울', '인천', '경기', '강원', '대전',
+                                    '충북', '충남', '광주', '전북', '전남',
+                                    '울산', '부산', '대구', '경북', '경남',
+                                    '제주'], '서울'),
+                required: true,
+                input_html: { autocomplete: "address" } %>
+    
+    </div>
+    
+
+  <div class="form-group">
+    <%= f.input :title, label: 'Title', input_html: { class: 'form-control' } %>
+    </div>
+
+   <div class="form-group">
+    <%= f.input :content, label: 'Content', input_html: { class: 'form-control'} %>
+   
+      
+      <%= f.input :picture, label: '사진',accept: 'image/png,image/gif,image/jpeg' , input_html: { class: 'form-control' }%>
+      <%#= f.hidden_field :picture_cache %>
+      </div>
+   <div class="form-actions">
+    <%= f.button :submit, '올리기' %>
+    <%#= link_to 'Show', @board, class: 'btn btn-default' if @board.persisted? %>
+    <%= link_to '목록', moms_path, class: 'btn btn-default' %>    
+  </div>
+<% end %>
+</div>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <style>
+    .ui{
+      padding:30px;
+      border: solid 1px #BDBDBD;
+      background-image: url('uploads/cat_protection/picture/back.jpg');
+    }
+    .row{
+      margin-top:20px;
+    }
+    h3{
+      font-size:30px;
+      font-family: 'Binggrae'; !important;
+    }
+    .btn btn-warning{
+      font-family: 'Binggrae'; !important;
+    }
+  </style>
+
+<!-- Page Content -->
+    <div class="container">
+
+      <!-- Page Heading -->
+      <h1 class="my-4">시설 정보
+        <small>일부 보호소만...</small>
+        <%#if user_signed_in? %> 
+         <%#if current_user. %>
+        <%= link_to '글쓰기', new_cat_protection_path, class: 'btn btn-warning' %>
+        <%#end%>
+          <%#end%>
+      </h1>
+      
+      <div class="ui">
+ <div class="row" >
+      <!-- Project--> <% @cat_protections.each do |cat_protection| %>
+        <div class="col-md-7">
+          
+            <%= image_tag("#{cat_protection.picture}",  width: "100%", height: "80%") %>
+            <hr>
+        </div>
+        <div class="col-md-5">
+          <h3 class="alert alert-light"><%=link_to cat_protection.title ,cat_protection%></h3>
+          <p class="alert alert-light"><%=cat_protection.content %></p>
+          
+          <%= link_to '보호소 홈페이지',cat_protection.link , class: 'btn btn-warning' %>
+           
+        </div>
+     
+      <% end%>
+      </div>
+      <!-- /.row -->
+
+ <!-- Pagination -->
+<ul class="pagination justify-content-center">
+    <li class="page-item">
+      <%= paginate @cat_protections ,theme: 'twitter-bootstrap-4',
+                   pagination_class: "pagination-sm" %>
+       </li>
+  </div>
+    <!-- /.container -->
+    </div>
+    
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

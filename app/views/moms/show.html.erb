@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="container col-md-10" align="center" style="margin-top: 40px; padding: 30px; background-color: #fff; border-radius: 15px;">
+   <div class="form-control">
+<h1 style="font-family:'Binggrae'">" <%= @mom.title %> "</h1>
+  <% if can? :update, @mom %>
+    <%= link_to '수정',edit_mom_path(@mom), class: 'btn btn-warning' %>
+  <% end %>
+  <% if can? :destroy, @mom %>
+    <%= link_to '삭제',@mom, method: :delete, data: { confirm: '삭제하시겠습니까?' }, class: 'btn btn-warning' %>
+    <br>
+  <% end %>
+
+<br>
+   <%= User.find(@mom.user_id).email %> |<%= time_ago_in_words(@mom.created_at) %> ago| 조회수 : <%= "#{@mom.impression_count}" %>
+
+   </div>
+      <hr>
+    <div class="form-control">
+     <%= image_tag("#{@mom.picture}",  width: "50%", height: "50%") %><br><%= @mom.content %>
+     </div>
+  <br>
+ <div class="form-control">
+     <h3 align="left">댓글 목록</h3>
+  <% @mom.comment_mom.each do |comment| %>  <!--하나의 노트에 여러개의 댓글이 있어서-->
+  <ul>
+    <li><h5 align="left">익명_id_<%=comment.id%>|<%= comment.content %>  |<%= time_ago_in_words(comment.created_at) %>
+    <% if current_user.id == comment.user_id %>
+        | <a href='/comment_moms/<%=current_user.id %>' data-confirm='댓글을 삭제합니다.' data-method='delete'>삭제하기</a>
+    <% end %>
+    </li></p></ul>
+<% end %>
+ </div>
+
+  <div class="form-group">
+      <form action='/comment_moms' method='POST'> 
+      <input type='hidden' name='authenticity_token' value=<%= @token %></input>
+      <input type='hidden' name='user_id' value= <%= current_user.id %>></input>
+       <input type='hidden' name='mom_id' value=<%= @mom.id %></input>
+       <input type='text' placeholder='댓글을 입력하세요!' name='input_content'></input>
+       <input type='submit' value='입력'></input> 
+       </form>
+ </div>
+
+ <%= link_to '목록', moms_path, class: 'btn btn-default' %>  
+</div>
+ 
+ 
+ 
+</div>  

@@ -1,0 +1,72 @@
+<style>
+  
+</style>
+<html>
+<!-- Page Content -->
+    <div class="container">
+
+ <!-- Page Heading -->
+      <h1 class="my-4">고양이 찾기
+        <small>주인을 찾습니다</small>
+        <% if user_signed_in? %>
+        <%= link_to '글쓰기', new_board_path, class: 'btn btn-warning' %>
+         <% else %>
+            <%= link_to '글쓰기',new_user_session_url, class: 'btn btn-warning', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: '로그인 후 가능!' %>
+           <%end %>
+      </h1>
+      <div class="row">
+ <% @boards.each do | board | %>
+
+        <div class="col-lg-3 col-md-3 col-xs-4 portfolio-item">
+          <div class="card h-100">
+            <!--<img class="card-img-top" src="http://placehold.it/700x400" alt="">-->
+             <%#= link_to(image_tag(board.picture_url(:thumb)),[board.users, board]) if board.picture?%>
+ 
+             <%= image_tag("#{board.picture}",  width: "100%", height: "55%") %>
+     
+         </img>
+       
+            <div class="card-body">
+              <h4 class="card-title">
+                   <%= board.title %>
+ 
+              </h4>
+              <p class="card-text">
+               <%= board.content %>
+                </p>
+                
+        <div class='actions'>
+          
+           <%= link_to fa_icon('eye'),board %>
+           
+            <% if can? :update, board %>
+                <%= link_to fa_icon('edit'),edit_board_path(board) %>
+            <% end %>
+            
+            <% if can? :destroy, board %>
+                <%= link_to fa_icon('trash'),board, method: :delete, data: { confirm: '삭제하시겠습니까?' }%>
+            <% end %>
+        
+        </div>
+    </div>
+   </div>
+   </div>
+  <% end %>
+ </div>
+ <!-- /.row -->
+
+      <!-- Pagination -->
+<ul class="pagination justify-content-center">
+    <li class="page-item">
+      <%= paginate @boards ,theme: 'twitter-bootstrap-4',
+                   pagination_class: "pagination-sm" %>
+       </li>
+
+    </div>
+    <!-- /.container -->
+    
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

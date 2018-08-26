@@ -1,0 +1,91 @@
+<div style="margin-top:100px;">
+<center>
+<h2><strong>유기묘 공고</strong></h2>
+<p class="text-muted small">24시간 동안 새롭게 올라온 유기묘 공고입니다.</p>
+</center>
+</div>
+<hr>
+<div class="container">
+    <div class="row">
+
+    </div>
+    
+    <div style="margin-bottom:50px;">
+        <center>
+            <h4 id="total"></h4>
+            <button class="btn btn-danger" onclick="window.open('http://www.animal.go.kr/portal_rnl/abandonment/protection_list.jsp');">보러가기</button>
+        </center>
+    </div>
+</div>
+        <script type="text/javascript" language="javascript">
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        
+        if(dd<10) {
+            dd='0'+dd
+        } 
+        
+        if(mm<10) {
+            mm='0'+mm
+        } 
+        
+        
+        var ydd = dd;
+        var lmm = mm;
+        var lyy = yyyy;
+        
+        if(ydd <= 1) {
+            if(lmm <= 1) {
+                
+                lyy = lyy - 1;
+                
+            } else {
+                lmm = lmm - 1;
+            }
+            
+        } else {
+            ydd = ydd - 1;
+        }
+        
+        yesterday = lyy + lmm + ydd;
+        today = yyyy + mm + dd;
+
+
+        	$(document).ready(function(){
+        	            $.ajax({
+        	               type: "GET"
+        	               ,dataType: "xml"
+        	               ,url: "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?serviceKey=Eb5fhpPHVSZ7AoYJMGkkYZedQNIBiVl%2FnWTI8jF94Rb2ioM4kO513S7zP5lv4Q8yTuX7Ad6CceOalJ5dFvK85w%3D%3D&bgnde=" + yesterday + "&endde=" + today + "&upkind=422400&state=notice&pageNo=1&startPage=1&numOfRows=24&pageSize=1"
+        	               ,error:function(request,status,error){
+        			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        			       }
+        	               ,success: function(xml){
+        	                    var xmlData = $(xml).find("item");
+        	                    var listLength = xmlData.length;
+        	                    if (listLength) {
+        	                        var contentStr = "";
+        	                        var count = 0;
+        	                        $(xmlData).each(function(){
+        	                        	count++;
+        	                            contentStr = '<div class="col-md-2" style="margin-bottom:20px"><div class="card mb-2 shadow-sm">'
+        	                            			  + '<img class="card-img-top" src="' + $(this).find("filename").text() + '" style="height:220px"><div class="card-body"><p class="card-text">'
+        	                            			  +  $(this).find("age").text() + "<br>" 
+        	                            			  +  $(this).find("kindCd").text() + "<br>" 
+        	                            			  +  $(this).find("careNm").text() + "<br>" 
+        	                            			  +  $(this).find("careTel").text() + "</p></div>"
+        	                                          + '<div class="d-flex justify-content-between align-items-center"><a href="http://www.animal.go.kr/portal_rnl/abandonment/protection_view.jsp?desertion_no=' + $(this).find("desertionNo").text() + '" target="_blank"><i class="fa fa-eye" style="padding:10px;"></a></div>'
+        	                                          +'</div></div>';
+        
+        	                        	$(".row").append(contentStr);
+        	                        });
+        	                    }
+        	                    
+        	                    xmlData = $(xml).find("totalCount").text();
+        	                    $("#total").text("오늘의 유기묘 공고는 총 "+xmlData+"건입니다.");
+        	                    
+        	                }
+        	             }); 
+        	    });
+        </script>

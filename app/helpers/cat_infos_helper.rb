@@ -1,0 +1,2 @@
+module CatInfosHelper
+end

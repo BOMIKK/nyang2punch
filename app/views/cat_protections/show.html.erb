@@ -1,0 +1,36 @@
+<style>
+    h2{
+        font-family: 'Binggrae'; !important;
+    }
+    p{
+        font-size: 17px;
+        font-family: 'Binggrae'; !important;
+    }
+</style>
+<div class="container"> 
+
+
+<div class="container col-md-10" align="center" style="margin-top: 40px; padding: 30px; background-color: #fff; border-radius: 15px;">
+<%= link_to '수정',edit_cat_protection_path(@cat_protection), class: 'btn btn-warning' %>|<%= link_to '삭제',@cat_protection, method: :delete, data: { confirm: '삭제하시겠습니까?' }, class: 'btn btn-warning' %>
+<br>
+<div class="form-control" style="margin-top: 20px;">
+     <%= image_tag("#{@cat_protection.picture}",  width: "50%", height: "50%") %><br>
+     <h2 style="margin-top: 20px;"><시설 이름></h2> <p><%= @cat_protection.title %></p>
+     </div>
+     
+     
+   <div class="form-control">
+
+<h2 class="col-md-9" style="margin-top: 15px;"><시설 소개></h2><p><%= @cat_protection.content %></p>
+<br>
+   </div>
+   <div class="form-control">
+  
+     <h2 style="margin-top: 15px;"><시설 링크></h2><p><%= @cat_protection.link %></p>
+     </div>
+      <hr>
+   
+    <%= link_to '목록', cat_protections_path, class: "btn btn-outline-warning" %>
+
+ </div>
+</div>

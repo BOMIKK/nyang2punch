@@ -1,0 +1,59 @@
+<div class="container col-md-5" align="center" style="margin-top: 200px; padding: 30px; background-color: #fff; border-radius: 15px;">
+  <h2><%= t(".sign_up") %></h2>
+<div class="col-md-7"><hr/></div>
+
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= f.error_notification %>
+  
+  
+   <div align="left" class="form-inputs align-middle">
+     
+      <div class="row">
+        <div class="alert alert-warning col-md-3" role="alert">이메일</div>
+        <div class="col-md-9"><%= f.email_field :email, class:"form-control", required: true, autofocus: true %></div>
+      </div>
+      
+      <div class="row" style="margin-top: 30px;">
+        <div class="alert alert-warning col-md-3"  role="alert">비밀번호</div>
+        <div class="col-md-9"><%= f.password_field :password, class:"form-control", placeholder: "6글자 이상!", 
+                                required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                                input_html: { autocomplete: "new-password" } %>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 30px;">
+       <div class="alert alert-warning col-md-3" role="alert">비밀번호 재확인</div>
+        <div class="col-md-9"><%= f.password_field :password_confirmation, placeholder: "6글자 이상!", class:"form-control", required: true %>
+      </div>
+      </div>
+       <div class="row" style="margin-top: 30px;">
+         <div class="alert alert-warning col-md-3" role="alert">주소 선택</div>
+      <div class="col-md-9"> <%= f.select :address, 
+                options_for_select(['서울', '인천', '경기', '강원', '대전',
+                                    '충북', '충남', '광주', '전북', '전남',
+                                    '울산', '부산', '대구', '경북', '경남',
+                                    '제주'], '서울'),
+                required: true,
+                input_html: { autocomplete: "address" } %>
+                </div>
+        </div>
+        
+     <div class="row" style="margin-top: 30px;">
+      <div class="alert alert-warning col-md-3" role="alert">전화번호</div>
+     <div class="col-md-9">
+       <%= f.text_field :phone_number,
+       placeholder: "010-1234-1234",
+      required: true,
+      input_html: { autocomplete: "phone_number" } %>
+      </div>
+      </div>
+    </div>
+
+
+  <div class="form-actions" style="margin-top: 20px;">
+       <%= f.button :submit, "Sign up",class: "btn btn-outline-warning" %>  
+    </div>
+<% end %>
+
+<%= render "users/shared/links" %>
+
+

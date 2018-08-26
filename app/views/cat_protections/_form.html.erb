@@ -1,0 +1,27 @@
+<div class="container">
+<%= simple_form_for(@cat_protection, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+  
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <div class="form-group">
+    <%= f.input :title, label: '시설 이름', input_html: { class: 'form-control' } %>
+    </div>
+
+   <div class="form-group">
+    <%= f.input :content, label: '시설 지역', input_html: { class: 'form-control'} %>
+     <small id="notification" class="form-text text-muted">정확한 지역명을 입력해주시기 바랍니다.</small> <br><br>
+      <%= f.input :link, label: '보호소 링크', input_html: { class: 'form-control'} %>
+       <small id="notification" class="form-text text-muted">홈페이지 존재시 입력</small>
+      
+      <%= f.input :picture, label: '사진',accept: 'image/png,image/gif,image/jpeg' , input_html: { class: 'form-control' }%>
+      <%= f.hidden_field :picture_cache %>
+         <small id="notification" class="form-text text-muted">사진 없을 시 기본사진으로 대체.</small> 
+      </div>
+      
+   <div class="form-actions">
+    <%= f.button :submit, '올리기' %>
+    <%#= link_to 'Show', @board, class: 'btn btn-default' if @board.persisted? %>
+    <%= link_to '목록', cat_protections_path, class: 'btn btn-default' %>    
+  </div>
+<% end %>
+</div>

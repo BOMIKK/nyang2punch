@@ -1,0 +1,87 @@
+<style>
+ p{
+     font-family: 'Binggrae'; !important;
+ }
+</style>
+<html>
+<!-- Page Content -->
+    <div class="container">
+
+ <!-- Page Heading -->
+      <h1 class="my-4">고양이 지식
+        <% if user_signed_in? %>
+        <%= link_to '글쓰기', new_cat_info_path, class: 'btn btn-warning' %>
+         <% else %>
+            <%= link_to '글쓰기',new_user_session_url, class: 'btn btn-warning', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: '로그인 후 가능!' %>
+           <%end %>
+      </h1>
+      
+      <br>
+      
+<table class="table">
+  <thead>
+    <tr>
+      <th>제목</th>
+       <th>내용</th>
+      <th>작성 시간</th>
+      <th>조회수</th>
+       <th>좋아요</th>
+    </tr>
+  </thead>
+
+  <tbody>
+     <% @cat_infos.each do |cat_info| %>
+ 
+      <tr>
+        <td><%=link_to cat_info.title,cat_info %></td>
+        <td><%=link_to cat_info.content,cat_info %></td>
+        <td><%#= post.user.present? ? post.user.email : "n/a" %> <%= time_ago_in_words(cat_info.created_at) %> ago</td>
+        <td>
+         <%= "#{cat_info.impression_count}" %>
+
+        </td>
+        <td>
+<div class='actions'>
+   <div class="votes">
+  <% if user_signed_in? %>
+
+    <% if current_user.liked? cat_info %>
+       <%= link_to fa_icon('gratipay'),unlike_cat_info_path(cat_info.id), method: :put, remote: true ,'data-toggle' => 'tooltip', 'data-placement' => 'top', title: '다시 누르면 좋아요 취소' %> <%= cat_info.get_likes.size %>
+     <% else %>
+       <%= link_to fa_icon('gratipay'),like_cat_info_path(cat_info.id), method: :put, remote: true %> <%= cat_info.get_likes.size %>
+     <%end %>
+         <% else %>
+         로그인 후 LIKE 가능합니다!
+          <%end %>
+          </div>
+   </div>
+            
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+      <!-- /.row -->
+
+      <!-- Pagination -->
+<ul class="pagination justify-content-center">
+    <li class="page-item">
+      <%= paginate @cat_infos ,theme: 'twitter-bootstrap-4',
+                   pagination_class: "pagination-sm" %>
+       </li>
+   
+      
+    </div>
+    <!-- /.container -->
+    
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

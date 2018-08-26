@@ -1,0 +1,21 @@
+/*정보 공유 메뉴의 서브 메뉴에 대한 스타일*/
+.container ul .submenu {
+    display: none;
+    position: absolute;
+    
+    padding-left: 0px;
+    background-color: #ffc107;
+}
+
+.container ul li:hover .submenu {
+    display: block;
+}
+
+.container ul .submenu {
+    float: none;
+}
+
+.submenu li {
+    list-style: none;
+}
+/*--------------------------------------------*/
